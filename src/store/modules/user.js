@@ -7,6 +7,10 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: ''
+
+    // 框架外
+    // userId："",
+    // userClient:"",
   }
 }
 
@@ -33,11 +37,23 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        // const { data } = response
+        // commit('SET_TOKEN', data.token)
+        // setToken(data.token)
+
+
+        const { result } = response
+        var token=JSON.stringify(result)
+        commit('SET_TOKEN', token)
+        setToken(token)
+
+        
+        console.log(token)
+
         resolve()
       }).catch(error => {
+
+
         reject(error)
       })
     })
@@ -47,17 +63,20 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
+        const { result } = response
 
-        if (!data) {
+        if (!result) {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { account } = result
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
+        // 设置头像和名称
+        commit('SET_NAME', account)
+        commit('SET_AVATAR', "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif")
+
+
+        resolve(result)
       }).catch(error => {
         reject(error)
       })
@@ -67,14 +86,20 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      // logout(state.token).then(() => {
+      //   removeToken() // must remove  token  first
+      //   resetRouter()
+      //   commit('RESET_STATE')
+      //   resolve()
+      // }).catch(error => {
+      //   reject(error)
+      // })
+
+      removeToken() // must remove  token  first
+      resetRouter()
+      commit('RESET_STATE')
+      resolve()
+
     })
   },
 

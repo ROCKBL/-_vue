@@ -4,7 +4,8 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+// import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 
 import '@/styles/index.scss' // global css
 
@@ -35,9 +36,30 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
+
+// 服务器地址，
+import baseUrl from '@/utils/url'
+Vue.prototype.baseUrl=baseUrl
+// 图片服务器地址
+Vue.prototype.picBaseUrl="http://ty-oss-001.oss-cn-hangzhou.aliyuncs.com"
+
+
+import axios from 'axios'
+
+Vue.prototype.axios=axios
+
+
 new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  
+  mounted(){
+  	// 固定头部
+  	this.$store.dispatch('settings/changeSetting', {
+      key: 'fixedHeader',
+      value: true
+    })
+  },
+  render: h => h(App),
 })
