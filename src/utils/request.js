@@ -25,9 +25,9 @@ service.interceptors.request.use(
       // config.headers['X-Token'] = getToken()
       var token=JSON.parse(getToken())
       // console.log(token,"xx")
-      config.headers['_ym_token_'] = token['ym_token_']
-      config.headers['__userid__'] = token['_userid__']
-      config.headers['_ym_client_'] = token['ym_client_']
+      config.headers['_ym_token_'] = token['_ym_token_']
+      config.headers['__userid__'] = token['__userid__']
+      config.headers['_ym_client_'] = token['_ym_client_']
     }
     return config
   },

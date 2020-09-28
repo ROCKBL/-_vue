@@ -1,8 +1,7 @@
 <template>
-    <div class="projectOrderList">
+    <div class="goodsorderlist">
         <div class="goodsBtns">
             
-
             <el-input size="small" placeholder="请输入内容" v-model="searchInput" class="input-with-select">
                 <el-button size="small" slot="append" icon="el-icon-search" @click="searchProject"></el-button>
             </el-input>
@@ -21,22 +20,22 @@
                     <el-form label-position="left" inline class="demo-table-expand">
                       <el-row :gutter="20">
                         <el-col :span="6">
-                          <el-form-item label="昵称：" label-width="100px">
+                          <el-form-item label="发货方式：" label-width="100px">
                             <span>{{ props.row.alias }}</span>
                           </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                          <el-form-item label="预约时间：" label-width="100px">
+                          <el-form-item label="发货状态：" label-width="100px">
                             <span>{{ props.row.appointment }}</span>
                           </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                          <el-form-item label="手机号码：" label-width="100px">
+                          <el-form-item label="快递单号：" label-width="100px">
                             <span>{{ props.row.phone }}</span>
                           </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                          <el-form-item label="性别：" label-width="100px">
+                          <el-form-item label="快递公司：" label-width="100px">
                             <span>{{ props.row.gender }}</span>
                           </el-form-item>
                         </el-col>
@@ -44,44 +43,42 @@
 
                       <el-row :gutter="20">
                         <el-col :span="6">
-                          <el-form-item label="姓名：" label-width="100px">
+                          <el-form-item label="收货人信息：" label-width="100px">
                             <span>{{ props.row.userName }}</span>
                           </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                          <el-form-item label="从事行业：" label-width="100px">
+                          <el-form-item label="优惠券金额：" label-width="100px">
                             <span>{{ props.row.industry }}</span>
                           </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                          <el-form-item label="消费预算：" label-width="100px">
+                          <el-form-item label="运费：" label-width="100px">
                             <span>{{ props.row.cost }}</span>
                           </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                          <el-form-item label="整形历史：" label-width="100px">
+                          <el-form-item label="使用积分：" label-width="100px">
                             <span>{{ props.row.history }}</span>
                           </el-form-item>
                         </el-col>
                       </el-row>
                       
                       <el-row :gutter="20">
-                        <el-col :span="6">
-                          <el-form-item label="所在区域：" label-width="100px">
+                        <el-col :span="24">
+                          <el-form-item label="备注：" label-width="100px">
                             <span>{{ props.row.area }}</span>
                           </el-form-item>
                         </el-col>
-                        <el-col :span="6">
-                          <el-form-item label="其它：" label-width="100px">
-                            <span>{{ props.row.other }}</span>
-                          </el-form-item>
-                        </el-col>
-                        <el-col :span="6">
-                          <el-form-item label="是否体检：" label-width="100px">
-                            <span>{{ props.row.isexperience }}</span>
-                          </el-form-item>
-                        </el-col>
+                      </el-row>
 
+
+                      <el-row :gutter="20">
+                          <el-col :span="24">
+                          <el-form-item label="商品列表：" label-width="100px">
+                            <!-- <div></div> -->
+                          </el-form-item>
+                        </el-col>
                       </el-row>
                       
                     </el-form>
@@ -90,12 +87,6 @@
                 <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="num" label="订单号" show-overflow-tooltip ></el-table-column>
                 <el-table-column prop="date" label="订单时间" show-overflow-tooltip width="100"></el-table-column>
-               <!--  <el-table-column label="商品图片" show-overflow-tooltip width="100">
-                    <template slot-scope="scope">
-                        <el-image style="width: 100%" :src="scope.row.pic" fit="contain"></el-image>
-                    </template>
-                </el-table-column> -->
-                <el-table-column prop="name" label="项目名称" show-overflow-tooltip width="180"></el-table-column>
                 <el-table-column prop="user" label="用户" show-overflow-tooltip width="180"></el-table-column>
                 <el-table-column prop="money" label="金额" show-overflow-tooltip width="100">
                   <template slot-scope="scope">
@@ -114,12 +105,12 @@
                     <el-tag >{{ scope.row.status }}</el-tag>
                   </template>
                 </el-table-column>
-                <!-- <el-table-column label="操作" show-overflow-tooltip>
+                <el-table-column label="操作" show-overflow-tooltip>
                     <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="editeGoods(scope.$index, scope.row)">修改</el-button>
-                        <el-button size="mini" type="danger" @click="deleteGoods(scope.$index, scope.row)">删除</el-button>
+                        <el-button size="mini" type="primary" @click="delivergoods(scope.$index, scope.row)">发货</el-button>
+                        <!-- <el-button size="mini" type="danger" @click="deleteGoods(scope.$index, scope.row)">删除</el-button> -->
                     </template>
-                </el-table-column> -->
+                </el-table-column>
 
             </el-table>
 
@@ -205,7 +196,11 @@ export default {
         refresh(currentPage){
             // console.log(this.currentpage)
             this.getData(currentPage)
+        },
+        delivergoods(index,row){
+            // 发货
         }
+
 
     },
     created(){
@@ -219,7 +214,7 @@ export default {
 </script>
 
 <style scoped>
-    .projectOrderList{
+    .goodsorderlist{
         padding: 20px;
     }
     .goodsBtns{
@@ -246,11 +241,11 @@ export default {
 </style>
 
 <style type="text/css">
-  .projectOrderList .el-form-item{
+  .goodsorderlist .el-form-item{
     margin-bottom: 0px;
   }
 
-  .projectOrderList .el-form--label-left .el-form-item__label{
+  .goodsorderlist .el-form--label-left .el-form-item__label{
     text-align: right;
   }
 </style>

@@ -23,7 +23,7 @@ import request from '@/utils/request'
     return request({
       url: '/manage/goodCategory/list',
       method: 'get',
-      // params:params
+      params:data
     })
   }
 

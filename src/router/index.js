@@ -51,8 +51,9 @@ export const constantRoutes = [
     children: [{
       path: 'dashboard',
       name: '首页',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      // component: () => import('@/views/dashboard/index'),
+      meta: { title: '首页', icon: 'dashboard' },
+
     }]
   },
 
@@ -138,8 +139,9 @@ export const constantRoutes = [
   {
     path: '/projectOrder',
     component: Layout,
-
     // redirect: '/dashboard',
+    hidden: true,
+
     children: [
       {
         path: '',
@@ -248,6 +250,25 @@ export const constantRoutes = [
   },
 
   {
+    path: '/goodsOrder',
+    component: Layout,
+    hidden: true,
+    redirect: '/goodsOrder/list',
+    name: 'goodsOrder',
+    meta: { title: '商品订单管理', icon: 'el-icon-s-order' },
+
+    children: [
+      {
+        path: 'list',
+        name: '商品订单列表',
+        component: () => import('@/views/goodsOrder/goodsorderlist'),
+        meta: { title: '商品订单列表', }
+      },
+
+    ]
+  },
+  
+  {
     path: '/diary',
     component: Layout,
     redirect: '/diary/list',
@@ -323,52 +344,134 @@ export const constantRoutes = [
     ]
   },
 
-
-
   {
-    path: '/orders',
+    path: '/address',
     component: Layout,
-    redirect: '/orders/list',
-    name: 'orders',
-    meta: { title: '订单管理', icon: 'el-icon-s-order' },
+    redirect: '/address/list',
+    name: 'address',
+    meta: { title: '收货地址管理', icon: 'el-icon-place' },
 
     children: [
       {
         path: 'list',
-        name: '订单列表',
-        component: () => import('@/views/order/orderList'),
-        meta: { title: '订单列表', }
+        name: '收货地址列表',
+        component: () => import('@/views/address/address'),
+        meta: { title: '收货地址列表', }
       },
-      {
-        path: 'selfRaising',
-        name: '自提订单',
-        component: () => import('@/views/order/orderList'),
-        meta: { title: '自提订单', }
-      },
-      {
-        path: 'postSale',
-        name: '售后订单',
-        component: () => import('@/views/order/postSaleList'),
-        meta: { title: '售后订单', }
-      },
-      {
-        path: 'assess',
-        name: '评价管理',
-        component: () => import('@/views/order/assessList'),
-        meta: { title: '评价管理', }
-      },
-      {
-        path: 'orderInfo',
-        name: '订单详情',
-        component: () => import('@/views/order/orderInfo'),
-        meta: { title: '订单详情', },
-        hidden: true
-      }
+
     ]
   },
+
+  {
+    path: '/cashout',
+    component: Layout,
+    hidden: true,
+    redirect: '/cashout/bankcard',
+    name: 'cashout',
+    meta: { title: '提现管理', icon: 'el-icon-coin' },
+
+    children: [
+      {
+        path: 'bankcard',
+        name: '银行卡列表',
+        component: () => import('@/views/cashout/bankcard'),
+        meta: { title: '银行卡管理', }
+      },
+      {
+        path: 'cashoutlist',
+        name: '提现申请列表',
+        component: () => import('@/views/cashout/cashoutlist'),
+        meta: { title: '提现申请列表', }
+      },
+
+    ]
+  },
+
+
+  {
+    path: '/carouselImage',
+    component: Layout,
+    redirect: '/carouselImage/carouselImagelit',
+    name: 'carouselImage',
+    meta: { title: '轮播图管理', icon: 'el-icon-picture' },
+
+    children: [
+      {
+        path: 'carouselImagelit',
+        name: '轮播图列表',
+        component: () => import('@/views/carouselImage/carouselImagelit'),
+        meta: { title: '轮播图列表', }
+      },
+      {
+        path: 'addcarouselImage',
+        name: '新增轮播图',
+        component: () => import('@/views/carouselImage/addcarouselImage'),
+        meta: { title: '新增轮播图', },
+        hidden: true
+      },
+      {
+        path: 'editecarouselImage',
+        name: '编辑轮播图',
+        component: () => import('@/views/carouselImage/addcarouselImage'),
+        meta: { title: '编辑轮播图', },
+        hidden: true
+      },
+
+    ]
+  },
+
+
+
+  
+
+  // {
+  //   path: '/orders',
+  //   component: Layout,
+  //   redirect: '/orders/list',
+  //   name: 'orders',
+  //   meta: { title: '订单管理', icon: 'el-icon-s-order' },
+
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: '订单列表',
+  //       component: () => import('@/views/order/orderList'),
+  //       meta: { title: '订单列表', }
+  //     },
+  //     {
+  //       path: 'selfRaising',
+  //       name: '自提订单',
+  //       component: () => import('@/views/order/orderList'),
+  //       meta: { title: '自提订单', }
+  //     },
+  //     {
+  //       path: 'postSale',
+  //       name: '售后订单',
+  //       component: () => import('@/views/order/postSaleList'),
+  //       meta: { title: '售后订单', }
+  //     },
+  //     {
+  //       path: 'assess',
+  //       name: '评价管理',
+  //       component: () => import('@/views/order/assessList'),
+  //       meta: { title: '评价管理', }
+  //     },
+  //     {
+  //       path: 'orderInfo',
+  //       name: '订单详情',
+  //       component: () => import('@/views/order/orderInfo'),
+  //       meta: { title: '订单详情', },
+  //       hidden: true
+  //     }
+  //   ]
+  // },
+
+
   {
     path: '/users',
     component: Layout,
+    hidden: true,
+    
     redirect: '/users/list',
     name: 'users',
     meta: { title: '用户管理', icon: 'user' },
@@ -401,6 +504,7 @@ export const constantRoutes = [
       }
     ]
   },
+
 
   // {
   //   path: '/example',
@@ -509,6 +613,8 @@ export const constantRoutes = [
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
+
+
 ]
 
 const createRouter = () => new Router({

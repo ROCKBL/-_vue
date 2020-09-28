@@ -157,7 +157,7 @@
     // import { upload } from '@/api/upload'
     import wang from "@/components/wangEditor";
 
-    import { projectpublish,projectuploadUrl,projectupload,projectmodify,sortlist } from '@/api/project'
+    import { projectpublish,projectuploadUrl,projectupload,projectmodify,sortlist,sortpage } from '@/api/project'
     import { list } from '@/api/hospital'
 
     import { getToken } from '@/utils/auth'
@@ -260,9 +260,9 @@ export default {
         xhrHead(){
             var token=JSON.parse(getToken())
             var headers={}
-            headers['_ym_token_'] = token['ym_token_']
-            headers['__userid__'] = token['_userid__']
-            headers['_ym_client_'] = token['ym_client_']
+            headers['_ym_token_'] = token['_ym_token_']
+            headers['__userid__'] = token['__userid__']
+            headers['_ym_client_'] = token['_ym_client_']
             return headers
         }
     },
@@ -406,7 +406,9 @@ export default {
         init(){
             var that=this;
 
-            sortlist().then(function(response){
+            sortlist({
+                allIs:true
+            }).then(function(response){
                 that.projectSortOption=response.result
                 // console.log(response)
             })

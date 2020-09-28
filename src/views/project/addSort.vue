@@ -113,9 +113,9 @@ export default {
         xhrHead(){
             var token=JSON.parse(getToken())
             var headers={}
-            headers['_ym_token_'] = token['ym_token_']
-            headers['__userid__'] = token['_userid__']
-            headers['_ym_client_'] = token['ym_client_']
+            headers['_ym_token_'] = token['_ym_token_']
+            headers['__userid__'] = token['__userid__']
+            headers['_ym_client_'] = token['_ym_client_']
             return headers
         }
     },

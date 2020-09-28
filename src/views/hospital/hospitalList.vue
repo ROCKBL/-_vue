@@ -19,6 +19,7 @@
                 <el-table-column prop="address" label="地址" show-overflow-tooltip width="150"></el-table-column>
                 <!-- <el-table-column prop="longitude" label="地址经度" show-overflow-tooltip width="100"></el-table-column> -->
                 <!-- <el-table-column prop="latitude" label="地址纬度" show-overflow-tooltip width="100"></el-table-column> -->
+                <el-table-column prop="type" label="医院类型" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="characteristic" label="医院特色" show-overflow-tooltip width="100"></el-table-column>
                 <!-- <el-table-column prop="introduction" label="医院简介" show-overflow-tooltip width="200"></el-table-column> -->
                 <el-table-column label="医院logo"  width="100">

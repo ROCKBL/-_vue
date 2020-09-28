@@ -45,6 +45,20 @@
 
             <el-row>
                 <el-col :span="12">
+                    <el-form-item label="商品价格" prop="price">
+                        <el-input v-model.number="ruleForm.price"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="商品优惠价" prop="couponPrice">
+                        <el-input v-model="ruleForm.couponPrice"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+
+
+            <el-row>
+                <el-col :span="12">
                     <el-form-item label="商品上架" prop="sale">
                         <el-switch v-model="ruleForm.sale" ></el-switch>
                     </el-form-item>
@@ -283,6 +297,9 @@ export default {
                 virtualSales:"",//虚拟销量
 
                 detail:"",//商品详情，富文本编辑器内容
+
+                price:"",//价格
+                couponPrice:"",//优惠价
             },
             rules: {
                 name: [
@@ -333,9 +350,9 @@ export default {
         xhrHead(){
             var token=JSON.parse(getToken())
             var headers={}
-            headers['_ym_token_'] = token['ym_token_']
-            headers['__userid__'] = token['_userid__']
-            headers['_ym_client_'] = token['ym_client_']
+            headers['_ym_token_'] = token['_ym_token_']
+            headers['__userid__'] = token['__userid__']
+            headers['_ym_client_'] = token['_ym_client_']
             return headers
         },
 
@@ -668,7 +685,9 @@ export default {
         init(){
             // 初始化商品分类列表
             var that=this;
-            gsortlist().then(function(response){
+            gsortlist({
+                allIs:true
+            }).then(function(response){
                 // console.log(response)
                 that.sorts=response.result
             })
@@ -678,15 +697,21 @@ export default {
             that.paramList=[]
             that.attrList=[]
             // 初始化商品参数列表，商品规格列表
+            var obj=this.sorts.find(function(o){return o.id==that.ruleForm.categoryId})
+            var goodCategoryId=this.ruleForm.categoryId
+            if(obj.upId!=null){
+                goodCategoryId=obj.upId
+            }
+
             var a1=gplist({
-                goodCategoryId:this.ruleForm.categoryId
+                goodCategoryId:goodCategoryId
             }).then(function(response){
                 that.paramList=response.result
 
                 // console.log("a1")
             })
             var a2=galist({
-                goodCategoryId:this.ruleForm.categoryId
+                goodCategoryId:goodCategoryId
             }).then(function(response){
                 that.attrList=response.result
 

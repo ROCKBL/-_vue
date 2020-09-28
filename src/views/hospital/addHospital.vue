@@ -47,7 +47,13 @@
                 </el-col>
             </el-row>
 
-            
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="医院类型" prop="type">
+                        <el-input v-model="ruleForm.type"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             
             <el-row>
                 <el-col :span="12">
@@ -123,7 +129,7 @@ export default {
                 logo:"",//医院logo地址
                 images:"",//医院图片地址
 
-                
+                type:"",//医院类型
                 introduction:"",//富文本编辑器内容,医院简介
             },
             rules: {
@@ -138,6 +144,11 @@ export default {
                 address:[
                     { required: true, message: '请输入医院地址', trigger: 'blur' },
                 ],
+
+                type:[
+                    { required: true, message: '请输入医院类型', trigger: 'blur' },
+                ],
+
                 longitude:[
                     { required: true, message: '请输入医院经度', trigger: 'blur' },
                     { type: 'number', message: '经度必须为数字', trigger: 'blur'},
@@ -165,9 +176,9 @@ export default {
         xhrHead(){
             var token=JSON.parse(getToken())
             var headers={}
-            headers['_ym_token_'] = token['ym_token_']
-            headers['__userid__'] = token['_userid__']
-            headers['_ym_client_'] = token['ym_client_']
+            headers['_ym_token_'] = token['_ym_token_']
+            headers['__userid__'] = token['__userid__']
+            headers['_ym_client_'] = token['_ym_client_']
             return headers
         }
     },
@@ -308,6 +319,8 @@ export default {
             this.ruleForm.logo=row.logo
             this.ruleForm.images=row.images
             this.ruleForm.introduction=row.introduction
+
+            this.ruleForm.type=row.type
 
             this.id=row.id
 

@@ -11,15 +11,46 @@
 
         <div class="hospitalTable">
             <el-table border ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" :cell-style="tableStyle" :header-cell-style="tableStyle">
-                <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
+                <!-- <el-table-column type="selection" width="40"></el-table-column> -->
+                <!-- <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column> -->
 
-                <el-table-column prop="name" label="项目名称" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="categoryName" label="所属分类" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="hospitalName" label="所属医院" show-overflow-tooltip width="150"></el-table-column>
-                <el-table-column prop="sort" label="排序" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column type="expand" label="项目详情" width="60">
+                    <template slot-scope="props">
+                        <el-form label-position="left" inline class="demo-table-expand">
+                            <el-row :gutter="20">
+                                <!-- <el-col :span="6">
+                                    <el-form-item label="所属分类：" label-width="100px">
+                                        <span>{{ props.row.categoryName }}</span>
+                                    </el-form-item>
+                                </el-col> -->
+                                <el-col :span="6">
+                                    <el-form-item label="所属医院：" label-width="100px">
+                                        <span>{{ props.row.hospitalName }}</span>
+                                    </el-form-item>
+                                </el-col>
+                                
+                                <el-col :span="6">
+                                    <el-form-item label="虚拟销量：" label-width="100px">
+                                        <span>{{ props.row.virtualSales }}</span>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="排序：" label-width="100px">
+                                        <span>{{ props.row.sort }}</span>
+                                    </el-form-item>
+                                </el-col>
+                                
+                            </el-row>
+                        </el-form>
+                    </template>
+                </el-table-column>
 
-                <el-table-column prop="virtualSales" label="虚拟销量" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="name" label="项目名称" show-overflow-tooltip ></el-table-column>
+                <el-table-column prop="categoryName" label="所属分类" show-overflow-tooltip width="80"></el-table-column>
+                <!-- <el-table-column prop="hospitalName" label="所属医院" show-overflow-tooltip width="150"></el-table-column> -->
+                <!-- <el-table-column prop="sort" label="排序" show-overflow-tooltip width="100"></el-table-column> -->
+
+                <!-- <el-table-column prop="virtualSales" label="虚拟销量" show-overflow-tooltip width="100"></el-table-column> -->
                 <el-table-column prop="price" label="原价" show-overflow-tooltip width="100">
                     <template slot-scope="scope">
                         <span v-if="isNaN(parseFloat(scope.row.price))">数值错误</span>
@@ -38,15 +69,15 @@
                         <span v-else>{{ parseFloat(scope.row.subsPrice).toFixed(2) }}元</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="stock" label="剩余数量" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="stock" label="剩余数量" show-overflow-tooltip width="80"></el-table-column>
                 <el-table-column prop="salesVolume" label="已预约数量" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="sale" label="是否上架" show-overflow-tooltip width="100">
+                <el-table-column prop="sale" label="是否上架" show-overflow-tooltip width="80">
                     <template slot-scope="scope">
                         <span v-if="scope.row.sale">已上架</span>
                         <span v-else>未上架</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="type" label="所属分区" show-overflow-tooltip width="100">
+                <el-table-column prop="type" label="所属分区" show-overflow-tooltip width="80">
                     <template slot-scope="scope">
                         <span>{{ getTpye(scope.row.type) }}</span>
                     </template>
@@ -58,7 +89,7 @@
                 </el-table-column>
 
                 
-                <el-table-column label="操作" show-overflow-tooltip  width="200">
+                <el-table-column label="操作" show-overflow-tooltip  width="160">
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="editeProject(scope.$index, scope.row)">修改</el-button>
                         <el-button size="mini" type="danger" @click="deleteProject(scope.$index, scope.row)">删除</el-button>

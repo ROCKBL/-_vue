@@ -27,7 +27,7 @@ export function sortlist(data) {
   return request({
     url: '/manage/projectCategory/list',
     method: 'get',
-    // params:params
+    params:data
   })
 }
 

@@ -1,10 +1,10 @@
 <template>
-    <div class="address">
+    <div class="bankcard">
         <div class="projectBtns">
             <!-- <el-button type="primary" @click="addProject" size="small">添加优惠券</el-button> -->
             <!-- <el-button type="danger" size="small" @click="batchDelete">批量删除</el-button> -->
 
-            <el-input size="small" placeholder="请输入名称" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchProject">
+            <el-input size="small" placeholder="请输入用户名" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchProject">
                 <el-button size="small" slot="append" icon="el-icon-search" @click="searchProject"></el-button>
             </el-input>
         </div>
@@ -14,23 +14,15 @@
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
 
-                <el-table-column prop="consumerName" label="用户名称" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="name" label="名称" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="consumerName" label="用户名" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="name" label="开户名" show-overflow-tooltip width="100"></el-table-column>
 
                 
-                <el-table-column prop="phone" label="手机号码" show-overflow-tooltip width="140"></el-table-column>
+                <el-table-column prop="phone" label="开户银行" show-overflow-tooltip width="140"></el-table-column>
                 
-                <el-table-column prop="province" label="省" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="city" label="市" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="area" label="区" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="address" label="详细地址" show-overflow-tooltip ></el-table-column>
+                <el-table-column prop="province" label="银行账号" show-overflow-tooltip ></el-table-column>
+                <el-table-column prop="city" label="提交时间" show-overflow-tooltip width="100"></el-table-column>
                 
-                <el-table-column prop="defaultIs" label="默认地址" show-overflow-tooltip width="100">
-                    <template slot-scope="scope">
-                        <div v-if="scope.row.defaultIs">是</div>
-                        <div v-else>否</div>
-                    </template>
-                </el-table-column>
                 
 
                 
@@ -53,7 +45,7 @@
 
 <script>
 
-    import { apage } from '@/api/address'
+    import { apage } from '@/api/cashout'
 
 export default {
     data() {
@@ -95,19 +87,19 @@ export default {
         //         }
         //     })
         // },
-        deleteProject(index,row){
-            // 删除单个商品
-            // console.log(index)
-            // console.log(row)
-            var data={
-                id:row.id
-            }
-            var that=this
-            cudelete(data).then(function(res){
-                that.getData()
-                that.currentpage=1
-            })
-        },   
+        // deleteProject(index,row){
+        //     // 删除单个商品
+        //     // console.log(index)
+        //     // console.log(row)
+        //     var data={
+        //         id:row.id
+        //     }
+        //     var that=this
+        //     cudelete(data).then(function(res){
+        //         that.getData()
+        //         that.currentpage=1
+        //     })
+        // },   
 
 
 
@@ -159,24 +151,24 @@ export default {
 </script>
 
 <style >
-    .address{
+    .bankcard{
         padding: 20px;
     }
-    .address .projectBtns{
+    .bankcard .projectBtns{
         display: flex;
         align-items: center;
     }
 
 
-    .address .input-with-select{
+    .bankcard .input-with-select{
         width: 200px;
         margin-left: auto;
     }
-    .address .hospitalTable{
+    .bankcard .hospitalTable{
         margin-top: 20px;
     }
     
-    .address .pagination{
+    .bankcard .pagination{
         display: flex;
         justify-content: center;
         margin:20px 0px;

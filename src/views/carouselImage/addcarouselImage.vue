@@ -1,28 +1,6 @@
 <template>
-    <div class="addSort">
+    <div class="addcarouselImage">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm" size="mini">
-
-            <el-row>
-                <el-col :span="12">
-                    <el-form-item label="分类名称" prop="name">
-                        <el-input v-model="ruleForm.name"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="所属父类" prop="upId">
-                        <!-- <el-input v-model="ruleForm.upId"></el-input> -->
-                        <el-select v-model="ruleForm.upId" placeholder="请选择所属父类">
-                            <el-option
-                              v-for="item in projectSortOption"
-                              :key="item.id"
-                              :label="item.name"
-                              :value="item.id">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-
             
             <el-row>
                 <el-col :span="12">
@@ -30,17 +8,23 @@
                         <el-input v-model="ruleForm.sort"></el-input>
                     </el-form-item>
                 </el-col>
+                
+            </el-row>
+            
+            <el-row>
                 <el-col :span="12">
-                    <el-form-item label="开启显示" prop="showIs">
-                        <el-switch v-model="ruleForm.showIs"></el-switch>
+                    <el-form-item label="类型" prop="type">
+                        <el-radio-group v-model="ruleForm.type">
+                            <el-radio :label="true">项目</el-radio>
+                            <el-radio :label="false">商城</el-radio>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
             </el-row>
             
-            
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="分类图标" prop="images" >
+                    <el-form-item label="轮播图片" prop="images" >
                         <el-upload class="picUploader" :action="uploadSrc" :show-file-list="false" :headers="xhrHead" :on-success="logoUpLoaded" :before-upload="beforeUpload">
                             <img v-if="ruleForm.images" :src="ruleForm.images" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -68,7 +52,7 @@
     // import ue from "@/components/ue/ue";
     // import { upload } from '@/api/upload'
 
-    import { gsortpublish,gsortuploadUrl,gsortmodify,gsortlist } from '@/api/goods'
+    import { cimodify,cipublish,ciupload,uploadUrl } from '@/api/carouselImage'
 
     import { getToken } from '@/utils/auth'
 
@@ -78,17 +62,15 @@ export default {
             // uploadSrc:"https://jsonplaceholder.typicode.com/posts/", //图片上传地址
             // uploadSrc:"http://127.0.0.1:12345/upLoad", //图片上传地址
 
-            uploadSrc:this.baseUrl+gsortuploadUrl,
+            uploadSrc:this.baseUrl+uploadUrl,
 
             dialogImageUrl: '',//预览图片地址
             dialogVisible: false,//预览图片开关
 
             ruleForm: {
                 
-                name:"",//项目分类名称
-                upId:"",//所属分类
                 sort:"",//排序
-                showIs:true,//是否显示
+                type:true,//是否显示
                 images:"",//分类图标
             },
             rules: {
@@ -166,13 +148,13 @@ export default {
             var that=this;
             if(this.type=="edite"){
                 this.ruleForm.id=this.id
-                gsortmodify(this.ruleForm).then(function(response){
+                cimodify(this.ruleForm).then(function(response){
                     that.$router.go(-1)
                 })
                 return
             }
 
-            gsortpublish(this.ruleForm).then(function(response){
+            cipublish(this.ruleForm).then(function(response){
                 that.$router.go(-1)
             })
         },
@@ -184,26 +166,28 @@ export default {
             this.$router.go(-1)
         },
         init(){
-            var that=this;
+            // var that=this;
 
-            gsortlist().then(function(response){
-                that.projectSortOption=response.result
-                // console.log(response)
-                if(that.id){
-                    var findIndex=that.projectSortOption.findIndex(function(obj){
-                        return obj.id===that.id
-                    })
-                    if(findIndex>-1){
-                        that.projectSortOption.splice(findIndex,1)
-                    }
-                }
+            // sortlist().then(function(response){
+            //     that.projectSortOption=response.result
+            //     // console.log(response)
+            //     if(that.id){
+            //         var findIndex=that.projectSortOption.findIndex(function(obj){
+            //             return obj.id===that.id
+            //         })
+            //         if(findIndex>-1){
+            //             that.projectSortOption.splice(findIndex,1)
+            //         }
+            //     }
 
-            })
+            // })
         }
     },
     created(){
         // 修改编辑页有值
-        // console.log(this.$route.query)        
+        // console.log(this.$route.query)
+
+        
 
         if(this.$route.query.row){
             // 编辑模式
@@ -212,10 +196,10 @@ export default {
             var row=JSON.parse(this.$route.query.row)
             
             // this.ruleForm.id=row.id
-            this.ruleForm.name=row.name
-            this.ruleForm.upId=row.upId
+
+            this.ruleForm.type=row.type
             this.ruleForm.sort=row.sort
-            this.ruleForm.showIs=row.showIs
+
             this.ruleForm.images=row.images
 
             this.id=row.id
@@ -231,21 +215,21 @@ export default {
 </script>
 
 <style>
-    .addSort{
+    .addcarouselImage{
         padding: 20px 10%;
     }
 
-    .addSort .picUploader .el-upload {
+    .addcarouselImage .picUploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
     }
-    .addSort .picUploader .el-upload:hover {
+    .addcarouselImage .picUploader .el-upload:hover {
         border-color: #409EFF;
     }
-    .addSort .avatar-uploader-icon {
+    .addcarouselImage .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
         width: 178px;
@@ -253,13 +237,13 @@ export default {
         line-height: 178px;
         text-align: center;
     }
-    .addSort .avatar {
+    .addcarouselImage .avatar {
         width: 178px;
         height: 178px;
         display: block;
     }
 
-    .addSort .servesContentWords{
+    .addcarouselImage .servesContentWords{
         color: rgba(0,0,0,0.4);
         font-size: 12px;
     }

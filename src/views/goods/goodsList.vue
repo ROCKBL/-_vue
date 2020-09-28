@@ -34,6 +34,8 @@
                         <div v-else>下架</div>
                     </template>
                 </el-table-column>
+                <el-table-column prop="couponPrice" label="优惠价" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="price" label="价格" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="salesVolume" label="实际销量" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="virtualSales" label="虚拟销量" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="unit" label="商品单位" show-overflow-tooltip width="100"></el-table-column>

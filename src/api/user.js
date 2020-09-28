@@ -21,7 +21,7 @@ export function getInfo(token) {
   console.log(token)
   var token=JSON.parse(token);
   var params={
-    id:token._userid__
+    id:token.__userid__
   }
   return request({
     // url: '/vue-admin-template/user/info',
