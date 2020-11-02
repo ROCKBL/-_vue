@@ -16,8 +16,16 @@
 
 
                 <el-table-column prop="name" label="名称" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="startTime" label="开始时间" show-overflow-tooltip width="180"></el-table-column>
-                <el-table-column prop="endTime" label="结束时间" show-overflow-tooltip width="180"></el-table-column>
+                <el-table-column prop="startTime" label="开始时间" show-overflow-tooltip width="180">
+                    <template slot-scope="scope">
+                        <div>{{ new Date(scope.row.startTime).Format("yyyy-MM-dd hh:mm:ss") }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="endTime" label="结束时间" show-overflow-tooltip width="180">
+                    <template slot-scope="scope">
+                        <div>{{ new Date(scope.row.endTime).Format("yyyy-MM-dd hh:mm:ss") }}</div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="validityDay" label="有效天数" show-overflow-tooltip width="100"></el-table-column>
 
                 <el-table-column prop="maxNum" label="最大领取数量" show-overflow-tooltip width="100"></el-table-column>
@@ -37,7 +45,7 @@
                 
             </el-table>
 
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage" ></el-pagination>
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage1" ></el-pagination>
         </div>
     </div>
 </template>
@@ -62,7 +70,7 @@ export default {
 
             total:0,
             limit:10,
-            currentpage:1,
+            currentpage1:1,
 
         }
     },
@@ -96,7 +104,7 @@ export default {
             var that=this
             cdelete(data).then(function(res){
                 that.getData()
-                that.currentpage=1
+                that.currentpage1=1
             })
         },   
 
@@ -113,7 +121,7 @@ export default {
         },
         searchProject(){
             // 根据关键字搜索商品
-
+            this.currentpage1=1
             this.getData()
         },
 

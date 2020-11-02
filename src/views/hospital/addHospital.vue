@@ -196,6 +196,11 @@ export default {
             //   this.$message.error('上传头像图片大小不能超过 2MB!');
             // }
             // return isJPG && isLt2M;
+            const isLt2M = file.size / 1024 / 1024 < 10;
+            if (!isLt2M) {
+              this.$message.error('上传图片大小不能超过 10MB!');
+            }
+            return  isLt2M;
         },
 
         logoUpLoaded(response, file, fileList){
@@ -224,10 +229,21 @@ export default {
             
         },
 
+        testPhone(phone){
+            if(!(/^1[3456789]\d{9}$/.test(phone))){
+                this.$message.error("请输入正确的手机号码")
+                return false; 
+            } 
+            return true
+        },
 
         submitForm(formName) {
             // 表单提交
             // console.log(this.ruleForm)
+            if(!this.testPhone(this.ruleForm.phone)){
+                return
+            }
+                        
             var that=this;
 
             // 编辑器赋值修正Bug

@@ -9,15 +9,17 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="有效天数" prop="validityDay">
-                        <el-input v-model="ruleForm.validityDay"></el-input>
+                    <el-form-item label="有效天数" prop="validityDay" required>
+                        <el-input v-model="ruleForm.validityDay">
+                            <template slot="append">天</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="开始时间" prop="startTime">
+                    <el-form-item label="开始时间" prop="startTime" required>
                         <el-date-picker
                           v-model="ruleForm.startTime"
                           type="date"
@@ -27,7 +29,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="结束时间" prop="endTime">
+                    <el-form-item label="结束时间" prop="endTime" required>
                         <el-date-picker
                           v-model="ruleForm.endTime"
                           type="date"
@@ -40,26 +42,34 @@
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="最小起用金额" prop="monetQuota">
-                        <el-input v-model="ruleForm.monetQuota"></el-input>
+                    <el-form-item label="最小起用金额" prop="monetQuota" required>
+                        <el-input v-model="ruleForm.monetQuota">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="优惠金额" prop="money">
-                        <el-input v-model="ruleForm.money"></el-input>
+                    <el-form-item label="优惠金额" prop="money" required>
+                        <el-input v-model="ruleForm.money">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="最大领取数量" prop="maxNum">
-                        <el-input v-model="ruleForm.maxNum"></el-input>
+                    <el-form-item label="最大领取数量" prop="maxNum" required>
+                        <el-input v-model="ruleForm.maxNum">
+                            <template slot="append">张</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="发行总数" prop="sendSum">
-                        <el-input v-model="ruleForm.sendSum"></el-input>
+                    <el-form-item label="发行总数" prop="sendSum" required>
+                        <el-input v-model="ruleForm.sendSum">
+                            <template slot="append">张</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -67,7 +77,7 @@
 
             <el-row>
                 <el-col :span="24">
-                    <el-form-item label="描述" prop="description">
+                    <el-form-item label="描述" prop="description" required>
                         <el-input
                           type="textarea"
                           :rows="4"

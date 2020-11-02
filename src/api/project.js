@@ -106,7 +106,7 @@ export function projectmodify(data) {
   return request({
     url: '/manage/project/modify',
     method: 'post',
-    params:data
+    data:data
   })
 }
 
@@ -126,7 +126,7 @@ export function projectpublish(data) {
     url: '/manage/project/publish',
     method: 'post',
     // data:data,
-    params:data
+    data:data
   })
 }
 
@@ -140,3 +140,30 @@ export function projectupload(data) {
 }
 
 export var projectuploadUrl="/manage/project/upload"
+
+
+// 项目订单
+  export function podetail(data) {
+    return request({
+
+      url: '/manage/projectOrder/detail',
+      method: 'get',
+      params:data
+    })
+  }
+  export function pomodifyState(data) {
+    return request({
+
+      url: '/manage/projectOrder/modifyState',
+      method: 'post',
+      params:data
+    })
+  }
+  export function popage(data) {
+    return request({
+
+      url: '/manage/projectOrder/page',
+      method: 'get',
+      params:data
+    })
+  }

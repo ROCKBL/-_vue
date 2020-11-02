@@ -11,8 +11,8 @@
 
         <div class="sortTable">
             <el-table border ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" :cell-style="tableStyle" :header-cell-style="tableStyle">
-                <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
+                <!-- <el-table-column type="selection" width="40"></el-table-column> -->
+                <!-- <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column> -->
                 <el-table-column prop="name" label="规格名称" show-overflow-tooltip width="150"></el-table-column>
                 
                 <el-table-column prop="goodCategoryName" label="规格所属商品分类" show-overflow-tooltip width="150"></el-table-column>
@@ -42,7 +42,7 @@
 
             </el-table>
 
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage" ></el-pagination>
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage1" ></el-pagination>
         </div>
     </div>
 </template>
@@ -69,7 +69,7 @@ export default {
 
             total:0,
             limit:10,
-            currentpage:1,
+            currentpage1:1,
 
         }
     },
@@ -104,7 +104,7 @@ export default {
             var that=this
             gadelete(data).then(function(res){
                 that.getData()
-                that.currentpage=1
+                that.currentpage1=1
             })
         },   
 
@@ -121,7 +121,9 @@ export default {
         },
         searchSort(){
             // 根据关键字搜索商品
-            console.log("aaa")
+            // console.log("aaa")
+            this.currentpage1=1
+            
             this.getData()
         },
 

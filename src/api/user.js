@@ -41,3 +41,22 @@ export function logout() {
     method: 'post'
   })
 }
+
+
+  // 获取用户列表
+  export function ugetConsumerList(data) {
+      return request({
+          url: '/manage/consumerList/getConsumerList',
+          method: 'get',
+          params:data
+      })
+  }
+
+  // 修改用户秘密
+  export function uupdatePassWord(data) {
+      return request({
+          url: '/manage/member/updatePassWord',
+          method: 'get',
+          params:data
+      })
+  }

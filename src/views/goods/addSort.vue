@@ -40,7 +40,7 @@
             
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="分类图标" prop="images" >
+                    <el-form-item label="分类图标" prop="images" required >
                         <el-upload class="picUploader" :action="uploadSrc" :show-file-list="false" :headers="xhrHead" :on-success="logoUpLoaded" :before-upload="beforeUpload">
                             <img v-if="ruleForm.images" :src="ruleForm.images" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -133,6 +133,12 @@ export default {
             //   this.$message.error('上传头像图片大小不能超过 2MB!');
             // }
             // return isJPG && isLt2M;
+
+            const isLt2M = file.size / 1024 / 1024 < 10;
+            if (!isLt2M) {
+              this.$message.error('上传图片大小不能超过 10MB!');
+            }
+            return  isLt2M;
         },
 
         logoUpLoaded(response, file, fileList){

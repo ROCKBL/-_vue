@@ -38,7 +38,7 @@ export function modify(data) {
 
     url: '/manage/hospital/modify',
     method: 'post',
-    params:data
+    data:data
   })
 }
 
@@ -58,7 +58,7 @@ export function publish(data) {
     url: '/manage/hospital/publish',
     method: 'post',
     // data:data,
-    params:data
+    data:data
   })
 }
 

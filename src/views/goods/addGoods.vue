@@ -18,25 +18,27 @@
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="单位" prop="unit">
+                    <el-form-item label="单位" prop="unit" required>
                         <el-input v-model="ruleForm.unit"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="商品积分" prop="integral">
-                        <el-input v-model="ruleForm.integral"></el-input>
+                    <el-form-item label="商品积分" prop="integral" required>
+                        <el-input v-model="ruleForm.integral">
+                            <template slot="append">分</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="虚拟销量" prop="virtualSales">
+                    <el-form-item label="虚拟销量" prop="virtualSales" required>
                         <el-input v-model.number="ruleForm.virtualSales"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="商品排序" prop="sort">
+                    <el-form-item label="商品排序" prop="sort" required>
                         <el-input v-model="ruleForm.sort"></el-input>
                     </el-form-item>
                 </el-col>
@@ -45,13 +47,17 @@
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="商品价格" prop="price">
-                        <el-input v-model.number="ruleForm.price"></el-input>
+                    <el-form-item label="商品价格" prop="price" required>
+                        <el-input v-model.number="ruleForm.price">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="商品优惠价" prop="couponPrice">
-                        <el-input v-model="ruleForm.couponPrice"></el-input>
+                    <el-form-item label="商品优惠价" prop="couponPrice" required>
+                        <el-input v-model="ruleForm.couponPrice">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -64,17 +70,25 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    
+                    <el-form-item label="特色商品" prop="specialtyIs">
+                        <el-switch v-model="ruleForm.specialtyIs" ></el-switch>
+                    </el-form-item>
                 </el-col>
             </el-row>
-
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="精品推荐" prop="recommendIs">
+                        <el-switch v-model="ruleForm.recommendIs" ></el-switch>
+                    </el-form-item>
+                </el-col>
+            </el-row>
 
             <!-- <el-row>
                 <el-col :span="12"></el-col>
                 <el-col :span="12"></el-col>
             </el-row> -->
 
-            <el-form-item label="商品参数" prop="">
+            <el-form-item label="商品参数" prop="" required>
                 <div class="paramItem" v-for="(param,index) in ruleForm.params">
                     <div>参数名称：</div>
                     <el-select style="margin-left: 10px;" v-model="param.goodsParamId" placeholder="请选择商品参数">
@@ -88,7 +102,7 @@
             </el-form-item>
 
             <!-- 添加商品规格 -->
-            <el-form-item v-if="!attrConfirm" label="商品规格" prop="">
+            <el-form-item v-if="!attrConfirm" label="商品规格" prop="" required>
                 <div class="attrItem" v-for="(attr,index) in attrAdded">
                     <div>规格名称：</div>
                     <el-select style="margin-left: 10px;" v-model="attr.id" placeholder="请选择商品规格">
@@ -105,7 +119,7 @@
 
 
             <!-- 添加商品库存 -->
-            <el-form-item v-if="attrConfirm" label="商品库存" prop="">
+            <el-form-item v-if="attrConfirm" label="商品库存" prop="" required>
                 <el-button type="primary" @click="addSku" size="small">添加商品库存</el-button>
 
                 <el-table :data="tableData" border style="width: 100%">
@@ -136,14 +150,14 @@
             </el-form-item>
 
 
-            <el-form-item label="商品主图" prop="firstImage" >
+            <el-form-item label="商品主图" prop="firstImage" required>
                 <el-upload class="picUploader" :action="uploadSrc" :show-file-list="false" :headers="xhrHead" :on-success="mainUpLoaded" :before-upload="beforeUpload">
                     <img v-if="ruleForm.firstImage" :src="ruleForm.firstImage" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-form-item>
             
-            <el-form-item label="商品轮播图" prop="shortPic">
+            <el-form-item label="商品轮播图" prop="shortPic" required>
                 <el-upload class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" :headers="xhrHead" list-type="picture-card" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
                 </el-upload>
@@ -181,26 +195,32 @@
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="优惠价" prop="couponPrice">
-                        <el-input v-model.number="skuObj.couponPrice"></el-input>
+                    <el-form-item label="优惠价" prop="couponPrice" required>
+                        <el-input v-model="skuObj.couponPrice">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="价格" prop="price">
-                        <el-input v-model.number="skuObj.price"></el-input>
+                    <el-form-item label="价格" prop="price" required>
+                        <el-input v-model="skuObj.price">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
 
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="库存" prop="num">
-                        <el-input v-model.number="skuObj.num"></el-input>
+                    <el-form-item label="库存" prop="num" required>
+                        <el-input v-model="skuObj.num"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="重量" prop="weight">
-                        <el-input v-model.number="skuObj.weight"></el-input>
+                    <el-form-item label="重量" prop="weight" required>
+                        <el-input v-model="skuObj.weight">
+                            <template slot="append">克</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -222,7 +242,7 @@
             </el-col> -->
 
 
-            <el-form-item v-for="attr in attrAdded" :label="attr.name" prop="">
+            <el-form-item v-for="attr in attrAdded" :label="attr.name" prop="" required>
                 <el-select v-model="skuObj[attr.id]" :placeholder="'请选择'+attr.name" >
                     <el-option v-for="value in attr.values" :label="value.value" :value="value.id"></el-option>
                 </el-select>
@@ -230,7 +250,7 @@
 
 
 
-            <el-form-item label="图片" prop="firstImage" >
+            <el-form-item label="图片" prop="firstImage" required>
                 <el-upload class="picUploader" :action="uploadSrc" :show-file-list="false" :headers="xhrHead" :on-success="skuUpLoaded" :before-upload="beforeUpload">
                     <img v-if="skuObj.image" :src="skuObj.image" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -300,6 +320,10 @@ export default {
 
                 price:"",//价格
                 couponPrice:"",//优惠价
+
+                specialtyIs:false,//特色商品
+                recommendIs:false,//精品推荐
+
             },
             rules: {
                 name: [
@@ -383,6 +407,8 @@ export default {
         getAttrValue(attrId,attrValueId){
             // console.log(attrId)
             // console.log(attrValueId)
+            console.log(attrId,",",attrValueId)
+            console.log(this.attrAdded)
             var obj=this.attrAdded.find(function(o){
                 return o.id==attrId
             })
@@ -481,9 +507,14 @@ export default {
 
         confirmAdd(){
             // 绑定商品和商品规格
-            this.attrConfirm=true
+            
 
             this.attrAdded=this.filterData(this.attrAdded,"id")
+            if(this.attrAdded.length==0){
+                this.$message.error('请先添加规格');
+                return
+            }
+            this.attrConfirm=true
             this.completeAttrAdded()
 
             console.log(this.attrAdded)
@@ -528,15 +559,16 @@ export default {
             // 商品主图和缩略图上传前检查图片函数
 
             // const isJPG = file.type === 'image/jpeg';
-            // const isLt2M = file.size / 1024 / 1024 < 2;
+            const isLt2M = file.size / 1024 / 1024 < 10;
 
             // if (!isJPG) {
             //   this.$message.error('上传头像图片只能是 JPG 格式!');
             // }
-            // if (!isLt2M) {
-            //   this.$message.error('上传头像图片大小不能超过 2MB!');
-            // }
+            if (!isLt2M) {
+              this.$message.error('上传图片大小不能超过 10MB!');
+            }
             // return isJPG && isLt2M;
+            return  isLt2M;
         },
         shortUpLoaded(response, file, fileList){
             // 商品缩略图上传后函数
@@ -627,6 +659,23 @@ export default {
             //         return false;
             //     }
             // });
+
+
+            // 判断商品参数是否完整
+            var paramsFlag=false
+            for(var i=0;i<this.ruleForm.params;i++){
+                // goodsParamId:null,
+                    // value:null
+                if(this.ruleForm.params[i].goodsParamId==null||this.ruleForm.params[i].value==null||this.ruleForm.params[i].value==""){
+                    paramsFlag=true
+                }
+            }
+            
+            if(paramsFlag){
+                this.$message.error('商品参数信息不完整，请完善');
+                return
+            }
+
 
             // 处理tableData生成ruleForm.specs
             var that=this;

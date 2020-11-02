@@ -4,7 +4,7 @@
             <!-- <el-button type="primary" @click="addProject" size="small">添加优惠券</el-button> -->
             <!-- <el-button type="danger" size="small" @click="batchDelete">批量删除</el-button> -->
 
-            <el-input size="small" placeholder="请输入优惠券名称" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchProject">
+            <el-input size="small" placeholder="请输入用户名称" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchProject">
                 <el-button size="small" slot="append" icon="el-icon-search" @click="searchProject"></el-button>
             </el-input>
         </div>
@@ -15,17 +15,31 @@
                 <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
                 <!-- <el-table-column prop="couponId" label="优惠券ID" width="60" show-overflow-tooltip></el-table-column> -->
                 <el-table-column prop="couponName" label="优惠券名称" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip width="180"></el-table-column>
-                <el-table-column prop="expirationTime" label="开始时间" show-overflow-tooltip width="180"></el-table-column>
+                <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip width="180">
+                    <template slot-scope="scope">
+                        <div>{{ (new Date(scope.row.createTime)).Format("yyyy-MM-dd hh:mm:ss") }}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="expirationTime" label="开始时间" show-overflow-tooltip width="180">
+                    <template slot-scope="scope">
+                        <div>{{ (new Date(scope.row.expirationTime)).Format("yyyy-MM-dd hh:mm:ss") }}</div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="orderNo" label="订单号" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="state" label="状态" show-overflow-tooltip width="100">
                     <template slot-scope="scope">
-                        <div>{{ scope.row.state }}</div>
+                        <div v-if="scope.row.state=='NOT_USE'"><el-tag >未使用</el-tag></div>
+                        <div v-if="scope.row.state=='ALREADIES_EXPIRATION'"><el-tag type="danger">已过期</el-tag></div>
+                        <div v-if="scope.row.state=='ALREADIES_USE'"><el-tag type="success">已使用</el-tag></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="useTime" label="使用时间" show-overflow-tooltip width="180"></el-table-column>
+                <el-table-column prop="useTime" label="使用时间" show-overflow-tooltip width="180">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.useTime!=null" >{{ (new Date(scope.row.useTime)).Format("yyyy-MM-dd hh:mm:ss") }}</div>
+                    </template>
+                </el-table-column>
                 <!-- <el-table-column prop="userId" label="用户Id" show-overflow-tooltip width="100"></el-table-column> -->
-                <el-table-column prop="userName" label="用户名称" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="consumerName" label="用户名称" show-overflow-tooltip width="100"></el-table-column>
                 
                 <el-table-column label="操作" show-overflow-tooltip >
                     <template slot-scope="scope">
@@ -37,7 +51,7 @@
                 
             </el-table>
 
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage" ></el-pagination>
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage1" ></el-pagination>
         </div>
     </div>
 </template>
@@ -62,7 +76,7 @@ export default {
 
             total:0,
             limit:10,
-            currentpage:1,
+            currentpage1:1,
 
         }
     },
@@ -96,7 +110,7 @@ export default {
             var that=this
             cudelete(data).then(function(res){
                 that.getData()
-                that.currentpage=1
+                that.currentpage1=1
             })
         },   
 
@@ -113,7 +127,7 @@ export default {
         },
         searchProject(){
             // 根据关键字搜索商品
-
+            this.currentpage1=1
             this.getData()
         },
 
@@ -123,7 +137,7 @@ export default {
                 limit:this.limit
             }
             if(this.searchInput){
-                data.name=this.searchInput
+                data.consumerName=this.searchInput
             }
 
             var that=this;

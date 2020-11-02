@@ -47,3 +47,11 @@ import request from '@/utils/request'
 	      	params:data
 	    })
 	}
+
+	export function dapprove(data) {
+	    return request({
+	      	url: '/manage/diary/approve',
+	      	method: 'post',
+	      	params:data
+	    })
+	}

@@ -264,6 +264,33 @@ import request from '@/utils/request'
   export var goodsuploadUrl="/manage/good/upload"
 
 
+  export function godetail(data) {
+    return request({
+
+      url: '/manage/goodsOrder/detail',
+      method: 'get',
+      params:data
+    })
+  }
+  export function gomodifyState(data) {
+    return request({
+
+      url: '/manage/goodsOrder/modifyState',
+      method: 'post',
+      params:data
+    })
+  }
+  export function gopage(data) {
+    return request({
+
+      url: '/manage/goodsOrder/page',
+      method: 'get',
+      params:data
+    })
+  }
+
+
+
 
 
 

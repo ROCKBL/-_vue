@@ -46,8 +46,8 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    // hidden: true,
+    redirect: '/hospital',
+    hidden: true,
     children: [{
       path: 'dashboard',
       name: '首页',
@@ -136,21 +136,21 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/projectOrder',
-    component: Layout,
-    // redirect: '/dashboard',
-    hidden: true,
+  // {
+  //   path: '/projectOrder',
+  //   component: Layout,
+  //   // redirect: '/dashboard',
+  //   hidden: true,
 
-    children: [
-      {
-        path: '',
-        name: '项目预约订单管理',
-        component: () => import('@/views/projectOrder/projectOrderList'),
-        meta: { title: '项目预约订单管理', icon: 'el-icon-s-order' }
-      },
-    ]
-  },
+  //   children: [
+  //     {
+  //       path: '/projectOrder',
+  //       name: '项目预约订单管理',
+  //       component: () => import('@/views/projectOrder/projectOrderList'),
+  //       meta: { title: '项目预约订单管理', icon: 'el-icon-s-order' }
+  //     },
+  //   ]
+  // },
 
 
   {
@@ -365,17 +365,26 @@ export const constantRoutes = [
   {
     path: '/cashout',
     component: Layout,
-    hidden: true,
-    redirect: '/cashout/bankcard',
+    // hidden: true,
+    redirect: '/cashout/cashoutlist',
     name: 'cashout',
     meta: { title: '提现管理', icon: 'el-icon-coin' },
 
     children: [
+      // {
+      //   path: 'cashoutSetting',
+      //   name: '分佣提现设置',
+      //   component: () => import('@/views/cashout/cashoutSetting'),
+      //   meta: { title: '分佣提现设置', },
+      //   hidden: true
+      // },
       {
         path: 'bankcard',
         name: '银行卡列表',
         component: () => import('@/views/cashout/bankcard'),
-        meta: { title: '银行卡管理', }
+        meta: { title: '银行卡管理', },
+        hidden: true
+
       },
       {
         path: 'cashoutlist',
@@ -420,57 +429,90 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/shipping',
+    component: Layout,
+    redirect: '/shipping/list',
+    name: 'shipping',
+    meta: { title: '运费管理', icon: 'el-icon-truck' },
 
+    children: [
+      {
+        path: 'list',
+        name: '运费规则列表',
+        component: () => import('@/views/shipping/list'),
+        meta: { title: '运费规则列表', }
+      },
+      {
+        path: 'edit',
+        name: '修改运费规则',
+        component: () => import('@/views/shipping/edit'),
+        meta: { title: '修改运费规则', },
+        hidden: true
+      },
+
+    ]
+  },
 
   
 
-  // {
-  //   path: '/orders',
-  //   component: Layout,
-  //   redirect: '/orders/list',
-  //   name: 'orders',
-  //   meta: { title: '订单管理', icon: 'el-icon-s-order' },
+  {
+    path: '/orders',
+    component: Layout,
+    redirect: '/orders/list',
+    name: 'orders',
+    meta: { title: '订单管理', icon: 'el-icon-s-order' },
 
-  //   children: [
-  //     {
-  //       path: 'list',
-  //       name: '订单列表',
-  //       component: () => import('@/views/order/orderList'),
-  //       meta: { title: '订单列表', }
-  //     },
-  //     {
-  //       path: 'selfRaising',
-  //       name: '自提订单',
-  //       component: () => import('@/views/order/orderList'),
-  //       meta: { title: '自提订单', }
-  //     },
-  //     {
-  //       path: 'postSale',
-  //       name: '售后订单',
-  //       component: () => import('@/views/order/postSaleList'),
-  //       meta: { title: '售后订单', }
-  //     },
-  //     {
-  //       path: 'assess',
-  //       name: '评价管理',
-  //       component: () => import('@/views/order/assessList'),
-  //       meta: { title: '评价管理', }
-  //     },
-  //     {
-  //       path: 'orderInfo',
-  //       name: '订单详情',
-  //       component: () => import('@/views/order/orderInfo'),
-  //       meta: { title: '订单详情', },
-  //       hidden: true
-  //     }
-  //   ]
-  // },
+    children: [
+      {
+        path: '/projectOrder',
+        name: '项目预约订单管理',
+        component: () => import('@/views/projectOrder/projectOrderList'),
+        meta: { title: '项目预约订单列表',  }
+      },
+
+      {
+        path: 'list',
+        name: '订单列表',
+        component: () => import('@/views/order/orderList'),
+        meta: { title: '商城订单列表', }
+      },
+      {
+        path: 'selfRaising',
+        name: '自提订单',
+        component: () => import('@/views/order/orderList'),
+        meta: { title: '自提订单', },
+        hidden: true
+      },
+      {
+        path: 'postSale',
+        name: '售后订单',
+        component: () => import('@/views/order/postSaleList'),
+        meta: { title: '售后订单', },
+        hidden: true
+      },
+      {
+        path: 'assess',
+        name: '评价管理',
+        component: () => import('@/views/order/assessList'),
+        meta: { title: '评价管理', },
+        hidden: true
+      },
+      {
+        path: 'orderInfo',
+        name: '订单详情',
+        component: () => import('@/views/order/orderInfo'),
+        meta: { title: '订单详情', },
+        hidden: true
+      }
+    ]
+  },
 
 
   {
     path: '/users',
     component: Layout,
-    hidden: true,
+    // hidden: true,
     
     redirect: '/users/list',
     name: 'users',
@@ -487,13 +529,15 @@ export const constantRoutes = [
         path: 'verificationOfficer',
         name: '核销员',
         component: () => import('@/views/user/verificationOfficer'),
-        meta: { title: '核销员', }
+        meta: { title: '核销员', },
+        hidden: true,
       },
       {
         path: 'memberLevel',
         name: '会员等级',
         component: () => import('@/views/user/memberLevel'),
-        meta: { title: '会员等级', }
+        meta: { title: '会员等级', },
+        hidden: true,
       },
       {
         path: 'memberLevelSetting',
@@ -505,6 +549,82 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/userLevel',
+    component: Layout,
+    redirect: '/userLevel/levelList',
+    meta: { title: '会员等级管理', icon: 'el-icon-s-check' },
+
+    children: [
+      {
+        path: 'levelList',
+        name: '会员等级列表',
+        component: () => import('@/views/userLevel/levelList'),
+        meta: { title: '会员等级列表', },
+
+      },
+      // {
+      //   path: 'changepassword',
+      //   name: '修改密码',
+      //   component: () => import('@/views/userLevel/changepassword'),
+      //   meta: { title: '会员等级管理', },
+
+      // },
+
+    ]
+  },
+
+  {
+    path: '/commission',
+    component: Layout,
+    redirect: '/commission/commissionlist',
+    meta: { title: '分佣列表', icon: 'el-icon-money' },
+
+    children: [
+      {
+        path: 'commissionlist',
+        name: '分佣列表',
+        component: () => import('@/views/commission/commissionlist'),
+        meta: { title: '分佣列表', },
+
+      },
+    ]
+  },
+
+  {
+    path: '/sys',
+    component: Layout,
+    redirect: '/sys/cashoutSetting',
+    meta: { title: '系统设置', icon: 'el-icon-setting' },
+
+    children: [
+      {
+        path: 'cashoutSetting',
+        name: '系统设置',
+        component: () => import('@/views/cashout/cashoutSetting'),
+        meta: { title: '系统设置', },
+
+      },
+
+    ]
+  },
+  {
+    path: '/manager',
+    component: Layout,
+    redirect: '/manager/changepassword',
+    meta: { title: '修改密码', icon: 'el-icon-lock' },
+
+    children: [
+      {
+        path: 'changepassword',
+        name: '修改密码',
+        component: () => import('@/views/manager/changepassword'),
+        meta: { title: '修改密码', },
+
+      },
+
+    ]
+  },
 
   // {
   //   path: '/example',

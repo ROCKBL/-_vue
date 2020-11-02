@@ -1,44 +1,34 @@
 <template>
-    <div class="projectSortList">
-        <div class="sortBtns">
-            <el-button type="primary" @click="addProjectSort" size="small">添加商品分类</el-button>
-            <!-- <el-button type="danger" size="small" @click="batchDelete">批量删除</el-button> -->
+    <div class="shippingList">
+        <div class="shippingBtns">
+            <el-button type="primary" @click="addshipping" size="small">添加运费模板</el-button>
 
-            <el-input size="small" placeholder="请输入分类名称" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchSort">
-                <el-button size="small" slot="append" icon="el-icon-search" @click="searchSort"></el-button>
-            </el-input>
         </div>
 
-        <div class="sortTable">
+        <div class="shippingTable">
             <el-table border ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" :cell-style="tableStyle" :header-cell-style="tableStyle">
                 <!-- <el-table-column type="selection" width="40"></el-table-column> -->
                 <!-- <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column> -->
-                <el-table-column prop="name" label="分类名称" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="name" label="运费模板名称" show-overflow-tooltip width="200"></el-table-column>
+                <el-table-column prop="tpye" label="计费方式" show-overflow-tooltip width="100">
+                	<template slot-scope="scope">
+                		<el-tag v-if="scope.row.tpye==0">按重计费</el-tag>
+                		<el-tag type="warning" v-if="scope.row.tpye==1">按件计费</el-tag>
+                	</template>
+                </el-table-column>
+                <el-table-column label="启用状态"  width="100">
+                    <template slot-scope="scope">
+                        <el-tag type="success" v-if="scope.row.defaultIs">已启用</el-tag>
+                        <el-tag type="danger" v-else>未启用</el-tag>
+                    </template>
+                </el-table-column>
                 
-                <!-- <el-table-column prop="upId" label="所属父类id" show-overflow-tooltip width="150"></el-table-column> -->
-                <el-table-column prop="upName" label="所属父类名称" show-overflow-tooltip width="150"></el-table-column>
-                <el-table-column prop="sort" label="排序" show-overflow-tooltip width="150"></el-table-column>
-                <el-table-column prop="showflag" label="是否显示" show-overflow-tooltip width="150">
+                <el-table-column label="操作" show-overflow-tooltip >
                     <template slot-scope="scope">
-                        <span v-if="scope.row.showIs">是</span>
-                        <span v-else>否</span>
+                        <el-button size="mini" type="primary" @click="editeshipping(scope.$index, scope.row)">修改</el-button>
+                        <el-button size="mini" type="danger" @click="deleteshipping(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
-
-                <el-table-column label="分类图标"  width="100">
-                    <template slot-scope="scope">
-                        <el-image style="width: 100%" :src="scope.row.images" fit="contain"></el-image>
-                    </template>
-                </el-table-column>
-
-                
-                <el-table-column label="操作" show-overflow-tooltip>
-                    <template slot-scope="scope">
-                        <el-button size="mini" type="primary" @click="editeSort(scope.$index, scope.row)">修改</el-button>
-                        <el-button size="mini" type="danger" @click="deleteSort(scope.$index, scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-
 
             </el-table>
 
@@ -46,10 +36,10 @@
         </div>
     </div>
 </template>
-    
+
 <script>
 
-    import { gsortpage,gsortlist,gsortdelete } from '@/api/goods'
+    import { fdelete,fpage,fsave } from '@/api/shipping'
 
 export default {
     data() {
@@ -60,55 +50,54 @@ export default {
 
             searchInput:"",
             tableData:[
-
-                // {id:1,name:"xxa",upId:"sss",sort:1,showIs:false,images:"https://img.yzcdn.cn/vant/cat.jpeg"},
                 
+
+                // {id:1,name:"测试医院",introduction:"医院简介",phone:"13312345678",address:"地址1",longitude:"120.811213",latitude:"27.932747",characteristic:"特色",logo:"https://img.yzcdn.cn/vant/cat.jpeg",images:"https://img.yzcdn.cn/vant/cat.jpeg"},
             ],
 
             multipleSelection:[],
-
             total:0,
             limit:10,
             currentpage1:1,
+
 
         }
     },
     computed:{},
     methods: {
-        addProjectSort(){
+        addshipping(){
              // 跳转添加医院页
-            this.$router.push("/goods/addSort")
+            this.$router.push("/shipping/edit")
         },
 
-        editeSort(index,row){
+        editeshipping(index,row){
             // 跳转编辑单个商品
             console.log(index)
             console.log(row)
 
             this.$router.push({
-                name:"修改商品分类",
+                name:"修改运费规则",
                 query: {
                     index:index,
                     row:JSON.stringify(row)
                 }
             })
         },
-        deleteSort(index,row){
+        deleteshipping(index,row){
             // 删除单个商品
-            // console.log(index)
-            // console.log(row)
+            console.log(index)
+            console.log(row)
 
             var data={
                 id:row.id
             }
             var that=this
-            gsortdelete(data).then(function(res){
+            fdelete(data).then(function(res){
                 that.getData()
                 that.currentpage1=1
             })
+
         },   
-
-
 
         handleSelectionChange(val){
             // 表格多选改变
@@ -119,14 +108,6 @@ export default {
         batchDelete(){
             // 批量删除医院
         },
-        searchSort(){
-            // 根据关键字搜索商品
-            // console.log("aaa")
-            this.currentpage1=1
-            
-            this.getData()
-        },
-
 
         getData(pageNum){
             var data={
@@ -138,7 +119,7 @@ export default {
             }
 
             var that=this;
-            gsortpage(data).then(function(res){
+            fpage(data).then(function(res){
                 // console.log(res)
                 that.tableData=res.result.items
                 that.total=res.result.total
@@ -148,7 +129,6 @@ export default {
             // console.log(this.currentpage)
             this.getData(currentPage)
         }
-
 
     },
     created(){
@@ -161,24 +141,24 @@ export default {
 </script>
 
 <style scoped>
-    .projectSortList{
+    .shippingList{
         padding: 20px;
     }
-    .projectSortList .sortBtns{
+    .shippingBtns{
         display: flex;
         align-items: center;
     }
 
 
-    .projectSortList .input-with-select{
+    .input-with-select{
         width: 200px;
         margin-left: auto;
     }
-    .projectSortList .sortTable{
+    .shippingTable{
         margin-top: 20px;
     }
     
-    .projectSortList .pagination{
+    .pagination{
         display: flex;
         justify-content: center;
         margin:20px 0px;

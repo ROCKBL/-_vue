@@ -34,7 +34,7 @@
     // import ue from "@/components/ue/ue";
     // import { upload } from '@/api/upload'
 
-    import { dcmodify,dcpublish } from '@/api/project'
+    import { dcmodify,dcpublish } from '@/api/diary'
 
 
 

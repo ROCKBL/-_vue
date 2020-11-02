@@ -14,13 +14,13 @@
                 <el-table-column type="selection" width="40"></el-table-column>
                 <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
 
-                <el-table-column prop="consumerName" label="用户名称" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="consumerName" label="用户名称" show-overflow-tooltip width="120"></el-table-column>
                 <el-table-column prop="name" label="名称" show-overflow-tooltip width="100"></el-table-column>
 
                 
                 <el-table-column prop="phone" label="手机号码" show-overflow-tooltip width="140"></el-table-column>
                 
-                <el-table-column prop="province" label="省" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="province" label="省" show-overflow-tooltip width="140"></el-table-column>
                 <el-table-column prop="city" label="市" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="area" label="区" show-overflow-tooltip width="100"></el-table-column>
                 <el-table-column prop="address" label="详细地址" show-overflow-tooltip ></el-table-column>
@@ -46,7 +46,7 @@
 
             </el-table>
 
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage" ></el-pagination>
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage1" ></el-pagination>
         </div>
     </div>
 </template>
@@ -71,7 +71,7 @@ export default {
 
             total:0,
             limit:10,
-            currentpage:1,
+            currentpage1:1,
 
         }
     },
@@ -105,7 +105,7 @@ export default {
             var that=this
             cudelete(data).then(function(res){
                 that.getData()
-                that.currentpage=1
+                that.currentpage1=1
             })
         },   
 
@@ -122,7 +122,7 @@ export default {
         },
         searchProject(){
             // 根据关键字搜索商品
-
+            this.currentpage1=1
             this.getData()
         },
 
@@ -132,7 +132,7 @@ export default {
                 limit:this.limit
             }
             if(this.searchInput){
-                data.name=this.searchInput
+                data.consumerName=this.searchInput
             }
 
             var that=this;

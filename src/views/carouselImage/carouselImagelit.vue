@@ -4,15 +4,15 @@
             <el-button type="primary" @click="addProject" size="small">添加轮播图</el-button>
             <!-- <el-button type="danger" size="small" @click="batchDelete">批量删除</el-button> -->
 
-            <el-input size="small" placeholder="请输入用户名" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchProject">
+            <!-- <el-input size="small" placeholder="请输入用户名" v-model="searchInput" class="input-with-select" @keyup.enter.native="searchProject">
                 <el-button size="small" slot="append" icon="el-icon-search" @click="searchProject"></el-button>
-            </el-input>
+            </el-input> -->
         </div>
 
         <div class="hospitalTable">
             <el-table border ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" :cell-style="tableStyle" :header-cell-style="tableStyle">
                 <el-table-column type="selection" width="40"></el-table-column>
-                <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column>
+                <!-- <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column> -->
 
                 <el-table-column prop="images" label="轮播图图片" show-overflow-tooltip width="100">
                     <template slot-scope="scope">

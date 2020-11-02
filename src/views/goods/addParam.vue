@@ -9,7 +9,7 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="所属商品分类" prop="goodCategoryId">
+                    <el-form-item label="所属商品分类" prop="goodCategoryId" required>
                         <!-- <el-input v-model="ruleForm.upId"></el-input> -->
                         <el-select v-model="ruleForm.goodCategoryId" placeholder="请选择所属分类">
                             <el-option

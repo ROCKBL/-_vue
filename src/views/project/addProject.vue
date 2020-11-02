@@ -55,7 +55,9 @@
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="原价" prop="price">
-                        <el-input v-model="ruleForm.price" placeholder=""></el-input>
+                        <el-input v-model="ruleForm.price" placeholder="">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -63,13 +65,17 @@
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="优惠价" prop="couponPrice">
-                        <el-input v-model="ruleForm.couponPrice" placeholder=""></el-input>
+                        <el-input v-model="ruleForm.couponPrice" placeholder="">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
 
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="预约价" prop="subsPrice">
-                        <el-input v-model="ruleForm.subsPrice" placeholder=""></el-input>
+                        <el-input v-model="ruleForm.subsPrice" placeholder="">
+                            <template slot="append">元</template>
+                        </el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -81,11 +87,11 @@
                     </el-form-item>
 
                 </el-col>
-                <el-col :span="12">
+              <!--   <el-col :span="12">
                     <el-form-item label="已预约数量" prop="salesVolume">
                         <el-input v-model="ruleForm.salesVolume" placeholder=""></el-input>
                     </el-form-item>
-                </el-col>
+                </el-col> -->
             </el-row>
             
             <el-row>
@@ -115,14 +121,14 @@
             </el-row>
 
 
-            <el-form-item label="项目缩略图" prop="firstImage" >
+            <el-form-item label="项目缩略图" prop="firstImage" required>
                 <el-upload class="picUploader" :action="uploadSrc" :show-file-list="false" :headers="xhrHead" :on-success="logoUpLoaded" :before-upload="beforeUpload">
                     <img v-if="ruleForm.firstImage" :src="ruleForm.firstImage" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-form-item>
             
-            <el-form-item label="轮播图" prop="images">
+            <el-form-item label="轮播图" prop="images" required>
                 <el-upload class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" list-type="picture-card" :headers="xhrHead" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
                 </el-upload>
@@ -199,7 +205,7 @@ export default {
                 // leftNum:null, //剩余数量
                 stock:0, //剩余数量
                 // orderNum:null, //已预约数量
-                salesVolume:0, //已预约数量
+                // salesVolume:0, //已预约数量
                 // isgrounding:false, //是否上架
                 sale:false, //是否上架
                 // belongBlock:"", //所属分区（普通区、特价区、VIP区、钻石区）
@@ -207,7 +213,7 @@ export default {
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入医院名称', trigger: 'blur' },
+                    { required: true, message: '请输入项目名称', trigger: 'blur' },
                     // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ],
                 hospitalId:[
@@ -234,9 +240,9 @@ export default {
                 stock:[
                     { required: true, message: '请输入剩余数量', trigger: 'blur' },
                 ],
-                salesVolume:[
-                    { required: true, message: '请输入已预约数量', trigger: 'blur' },
-                ],
+                // salesVolume:[
+                //     { required: true, message: '请输入已预约数量', trigger: 'blur' },
+                // ],
             },
 
             options:[
@@ -280,6 +286,11 @@ export default {
             //   this.$message.error('上传头像图片大小不能超过 2MB!');
             // }
             // return isJPG && isLt2M;
+            const isLt2M = file.size / 1024 / 1024 < 10;
+            if (!isLt2M) {
+              this.$message.error('上传图片大小不能超过 10MB!');
+            }
+            return  isLt2M;
         },
 
         logoUpLoaded(response, file, fileList){
@@ -490,7 +501,7 @@ export default {
             this.ruleForm.subsPrice=row.subsPrice
             this.ruleForm.content=row.content
             this.ruleForm.stock=row.stock
-            this.ruleForm.salesVolume=row.salesVolume
+            // this.ruleForm.salesVolume=row.salesVolume
             this.ruleForm.sale=row.sale
             this.ruleForm.type=row.type
 

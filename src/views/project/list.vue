@@ -99,7 +99,7 @@
                 
             </el-table>
 
-            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage" ></el-pagination>
+            <el-pagination layout="prev, pager, next" :total="total" :page-size="limit" class="pagination" hide-on-single-page @current-change="refresh" :current-page.sync="currentpage1" ></el-pagination>
         </div>
     </div>
 </template>
@@ -155,7 +155,7 @@ export default {
 
             total:0,
             limit:10,
-            currentpage:1,
+            currentpage1:1,
 
         }
     },
@@ -206,7 +206,7 @@ export default {
             var that=this
             projectdelete(data).then(function(res){
                 that.getData()
-                that.currentpage=1
+                that.currentpage1=1
             })
         },   
 
@@ -223,7 +223,7 @@ export default {
         },
         searchProject(){
             // 根据关键字搜索商品
-
+            this.currentpage1=1
             this.getData()
         },
 
