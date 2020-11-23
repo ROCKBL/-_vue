@@ -63,7 +63,7 @@
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary"  :disabled="scope.row.approve!=0" @click="approveSuccess(scope.$index, scope.row)">审核成功</el-button>
                         <el-button size="mini" type="primary"  :disabled="scope.row.approve!=0" @click="approveFail(scope.$index, scope.row)">审核失败</el-button>
-                        <!-- <el-button size="mini" type="danger"  @click="deleteDiary(scope.$index, scope.row)">删除</el-button> -->
+                        <el-button size="mini" type="danger"  @click="deleteDiary(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
 
@@ -77,7 +77,7 @@
     
 <script>
 
-    import { dpage,dapprove } from '@/api/diary'
+    import { dpage,dapprove,ddelete } from '@/api/diary'
 
 export default {
     data() {
@@ -103,6 +103,33 @@ export default {
     },
     computed:{},
     methods: {
+        deleteDiary(index,row){
+            var that=this;
+            this.$confirm('此操作将删除该日志, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                ddelete({
+                    id:row.id
+                }).then(function(res){
+                    console.log(res)
+                    that.currentpage1=1
+                    that.getData()
+                })
+              // this.$message({
+              //   type: 'success',
+              //   message: '删除成功!'
+              // });
+
+            }).catch(() => {
+              // this.$message({
+              //   type: 'info',
+              //   message: '已取消删除'
+              // });
+            });            
+        },
+
         // addProjectSort(){
         //      // 跳转添加医院页
         //     this.$router.push("/diary/addSort")
@@ -197,7 +224,6 @@ export default {
             // console.log(this.currentpage)
             this.getData(currentPage)
         }
-
 
     },
     created(){

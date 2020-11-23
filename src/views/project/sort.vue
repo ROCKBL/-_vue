@@ -97,15 +97,24 @@ export default {
             // 删除单个商品
             // console.log(index)
             // console.log(row)
-
-            var data={
+             var data={
                 id:row.id
             }
             var that=this
-            sortdelete(data).then(function(res){
-                that.getData()
-                that.currentpage1=1
-            })
+
+            this.$confirm('确认删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                sortdelete(data).then(function(res){
+                    that.getData()
+                    that.currentpage1=1
+                })
+            }).catch(() => {
+              
+
+            });
         },   
 
 

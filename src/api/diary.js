@@ -55,3 +55,11 @@ import request from '@/utils/request'
 	      	params:data
 	    })
 	}
+
+	export function ddelete(data) {
+	    return request({
+	      	url: '/manage/diary/delete',
+	      	method: 'delete',
+	      	params:data
+	    })
+	}

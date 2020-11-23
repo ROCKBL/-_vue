@@ -102,10 +102,25 @@ export default {
                 id:row.id
             }
             var that=this
-            gpdelete(data).then(function(res){
-                that.getData()
-                that.currentpage1=1
-            })
+            // gpdelete(data).then(function(res){
+            //     that.getData()
+            //     that.currentpage1=1
+            // })
+
+            this.$confirm('确认删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                gpdelete(data).then(function(res){
+                    that.getData()
+                    that.currentpage1=1
+                })
+            }).catch(() => {
+              
+
+            });
+            
         },   
 
 

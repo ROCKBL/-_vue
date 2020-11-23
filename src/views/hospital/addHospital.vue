@@ -64,15 +64,24 @@
                         </el-upload>
                     </el-form-item>
                 </el-col>
-                <el-col :span="12">
+
+                <!-- <el-col :span="12">
                     <el-form-item label="医院图片" prop="mainPic" >
                         <el-upload class="picUploader" :action="uploadSrc" :show-file-list="false"  :on-success="picUpLoaded" :headers="xhrHead" :before-upload="beforeUpload">
                             <img v-if="ruleForm.images" :src="ruleForm.images" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
-                </el-col>
+                </el-col> -->
+
             </el-row>
+
+
+            <el-form-item label="医院图片" prop="images" required>
+                <el-upload :limit="20" :on-exceed="overLimit" class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" list-type="picture-card" :headers="xhrHead" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+            </el-form-item>
 
 
             <el-form-item label="医院简介" >
@@ -93,7 +102,9 @@
 
         </el-form>
 
-
+        <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
     </div>
 </template>
 
@@ -117,6 +128,8 @@ export default {
 
             dialogImageUrl: '',//预览图片地址
             dialogVisible: false,//预览图片开关
+
+            imagesList:[],//ruleForm.images数组形式
 
             ruleForm: {
                 name:"",//医院名称
@@ -183,6 +196,11 @@ export default {
         }
     },
     methods: {
+        overLimit(files, fileList){
+            console.log(files)
+            console.log(fileList)
+            this.$message.error('超出上传上限！');
+        },
         beforeUpload(file){
             // 商品主图和缩略图上传前检查图片函数
 
@@ -314,7 +332,56 @@ export default {
 
         goback(){
             this.$router.go(-1)
-        }
+        },
+
+
+        shortUpLoaded(response, file, fileList){
+            // 商品缩略图上传后函数
+
+            // this.imageUrl = URL.createObjectURL(file.raw);
+            console.log(response)
+            console.log(file)
+            console.log(fileList)
+            // if(response.msg=="success"){
+            //     this.ruleForm.firstImage=this.picBaseUrl+response.result.url
+            // }
+
+            this.imagesList.push({
+                name:response.result.url,
+                url:this.picBaseUrl+response.result.url
+            })
+            var ar=[]
+            for(var i=0;i<this.imagesList.length;i++){
+                ar.push(this.imagesList[i].url)
+            }
+            this.ruleForm.images=ar.join(",")
+
+        },
+        handlePictureCardPreview(file){
+            // 商品缩略图预览
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
+        },
+        handleRemove(file, fileList){
+            // 商品缩略图移除
+
+            console.log(file)
+            console.log(fileList)
+
+            var index=this.imagesList.findIndex(function(obj){
+                return obj.url==file.url
+            })
+
+            if(index>-1){
+                this.imagesList.splice(index,1)
+            }
+            var ar=[]
+            for(var i=0;i<this.imagesList.length;i++){
+                ar.push(this.imagesList[i].url)
+            }
+            this.ruleForm.images=ar.join(",")
+
+        },
 
     },
     created(){
@@ -334,6 +401,16 @@ export default {
             this.ruleForm.characteristic=row.characteristic
             this.ruleForm.logo=row.logo
             this.ruleForm.images=row.images
+
+            var ar=row.images.split(",")
+            this.imagesList=[];
+            for(var i =0;i<ar.length;i++){
+                this.imagesList.push({
+                    name:i,
+                    url:ar[i]
+                })
+            }
+
             this.ruleForm.introduction=row.introduction
 
             this.ruleForm.type=row.type

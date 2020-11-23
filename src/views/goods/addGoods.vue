@@ -158,7 +158,7 @@
             </el-form-item>
             
             <el-form-item label="商品轮播图" prop="shortPic" required>
-                <el-upload class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" :headers="xhrHead" list-type="picture-card" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                <el-upload :limit="20" :on-exceed="overLimit" class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" :headers="xhrHead" list-type="picture-card" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
@@ -395,6 +395,12 @@ export default {
         // }
     },
     methods: {
+        overLimit(files, fileList){
+            console.log(files)
+            console.log(fileList)
+            this.$message.error('超出上传上限！');
+        },
+        
         editeSku(index,row){
             this.skuObj=row
             this.skuIndex=index
@@ -422,7 +428,26 @@ export default {
         dialogConfirm(){
             // 添加或者修改
             if(this.skuIndex==null){
-                this.tableData.push(this.skuObj)
+                // 判断是否重复添加相同规格的库存
+                var that=this;
+                var find=this.tableData.find(function(o){
+                    var flag=true
+                    for(var i=0;i<that.attrAdded.length;i++){
+                        if(o[that.attrAdded[i].id]!=that.skuObj[that.attrAdded[i].id]){
+                            flag=false
+                        }
+                    }
+                    return flag
+                })
+                if(find){
+                    // 存在重复
+                    this.$message.error('已存在相同规格的库存，无法添加！');
+                    return
+                }else{
+                    this.tableData.push(this.skuObj)
+                }
+                // this.tableData.push(this.skuObj)
+                
             }
             this.dialogFormVisible=false
         },

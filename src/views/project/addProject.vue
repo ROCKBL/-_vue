@@ -129,7 +129,7 @@
             </el-form-item>
             
             <el-form-item label="轮播图" prop="images" required>
-                <el-upload class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" list-type="picture-card" :headers="xhrHead" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                <el-upload :limit="20" :on-exceed="overLimit" class="picUploader" :file-list="imagesList" :action="uploadSrc" :show-file-list="true" list-type="picture-card" :headers="xhrHead" :on-success="shortUpLoaded" :before-upload="beforeUpload" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </el-form-item>
@@ -273,6 +273,11 @@ export default {
         }
     },
     methods: {
+        overLimit(files, fileList){
+            console.log(files)
+            console.log(fileList)
+            this.$message.error('超出上传上限！');
+        },
         beforeUpload(file){
             // 商品主图和缩略图上传前检查图片函数
 

@@ -13,14 +13,14 @@
             <el-table border ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange" :cell-style="tableStyle" :header-cell-style="tableStyle">
                 <!-- <el-table-column type="selection" width="40"></el-table-column> -->
                 <!-- <el-table-column prop="id" label="ID" width="60" show-overflow-tooltip></el-table-column> -->
-                <el-table-column prop="name" label="医院名称" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="name" label="医院名称" show-overflow-tooltip width="120"></el-table-column>
                 
                 <el-table-column prop="phone" label="电话" show-overflow-tooltip width="150"></el-table-column>
-                <el-table-column prop="address" label="地址" show-overflow-tooltip width="150"></el-table-column>
+                <el-table-column prop="address" label="地址" show-overflow-tooltip ></el-table-column>
                 <!-- <el-table-column prop="longitude" label="地址经度" show-overflow-tooltip width="100"></el-table-column> -->
                 <!-- <el-table-column prop="latitude" label="地址纬度" show-overflow-tooltip width="100"></el-table-column> -->
                 <el-table-column prop="type" label="医院类型" show-overflow-tooltip width="100"></el-table-column>
-                <el-table-column prop="characteristic" label="医院特色" show-overflow-tooltip width="100"></el-table-column>
+                <el-table-column prop="characteristic" label="医院特色" show-overflow-tooltip ></el-table-column>
                 <!-- <el-table-column prop="introduction" label="医院简介" show-overflow-tooltip width="200"></el-table-column> -->
                 <el-table-column label="医院logo"  width="100">
                     <template slot-scope="scope">
@@ -28,11 +28,11 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="医院照片"  width="100">
+              <!--   <el-table-column label="医院照片"  width="100">
                     <template slot-scope="scope">
                         <el-image style="width: 100%" :src="scope.row.images" fit="contain"></el-image>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 
                 <el-table-column label="操作" show-overflow-tooltip>
                     <template slot-scope="scope">
@@ -108,10 +108,25 @@ export default {
                 id:row.id
             }
             var that=this
-            hospitaldelete(data).then(function(res){
-                that.getData()
-                that.currentpage1=1
-            })
+            // hospitaldelete(data).then(function(res){
+            //     that.getData()
+            //     that.currentpage1=1
+            // })
+
+            this.$confirm('确认删除?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                hospitaldelete(data).then(function(res){
+                    that.getData()
+                    that.currentpage1=1
+                })
+            }).catch(() => {
+              
+
+            });
+            
 
         },   
 

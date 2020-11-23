@@ -20,7 +20,7 @@
                 <el-table-column label="操作" show-overflow-tooltip >
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" @click="editDiscount(scope.$index, scope.row)">修改折扣</el-button>
-                        <el-button size="mini" type="success" v-if="scope.row.money!=null" @click="editMoney(scope.$index, scope.row)">修改价格</el-button>
+                        <el-button size="mini" type="success" v-if="scope.row.id==1||scope.row.id==3" @click="editMoney(scope.$index, scope.row)">修改价格</el-button>
                     </template>
                 </el-table-column>
             </el-table>

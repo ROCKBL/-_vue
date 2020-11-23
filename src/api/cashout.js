@@ -11,8 +11,8 @@ import request from '@/utils/request'
 	export function smodify(data) {
 	    return request({
 	      	url: '/manage/sysConfiguration/modify',
-	      	method: 'get',
-	      	params:data
+	      	method: 'post',
+	      	data:data
 	    })
 	}
 

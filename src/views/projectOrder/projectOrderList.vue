@@ -139,7 +139,7 @@
 
             </el-table>
 
-            <el-dialog title="订单详情" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+            <el-dialog title="订单详情" :visible.sync="dialogVisible" width="60%" :before-close="handleClose">
                 <el-form :model="{}">
                     <el-row :gutter="20">
                         <el-col :span="12">
